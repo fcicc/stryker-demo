@@ -1,7 +1,7 @@
-using System;
+using StrykerDemo.Calc;
 using Xunit;
 
-namespace StrykerDemo.Tests
+namespace StrykerDemo.Tests.Calc
 {
     public class CalculatorTests
     {

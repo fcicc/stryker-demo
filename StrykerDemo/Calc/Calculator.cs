@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace StrykerDemo
+﻿namespace StrykerDemo.Calc
 {
     public class Calculator
     {
