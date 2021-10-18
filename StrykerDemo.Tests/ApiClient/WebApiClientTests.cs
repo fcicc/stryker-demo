@@ -29,6 +29,7 @@ namespace StrykerDemo.Tests.ApiClient
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
                     ItExpr.IsAny<CancellationToken>())
+                .Callback<HttpRequestMessage, CancellationToken>(AssertHttpRequestMessageIsCorrect)
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.OK,
@@ -60,6 +61,7 @@ namespace StrykerDemo.Tests.ApiClient
                     "SendAsync",
                     ItExpr.IsAny<HttpRequestMessage>(),
                     ItExpr.IsAny<CancellationToken>())
+                .Callback<HttpRequestMessage, CancellationToken>(AssertHttpRequestMessageIsCorrect)
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     StatusCode = HttpStatusCode.BadRequest
@@ -72,6 +74,16 @@ namespace StrykerDemo.Tests.ApiClient
 
             // Act and Assert
             await Assert.ThrowsAsync<HttpRequestException>(() => webApiClient.GetData());
+        }
+
+        private void AssertHttpRequestMessageIsCorrect(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            Assert.Equal(
+                "/data",
+                request.RequestUri.PathAndQuery,
+                StringComparer.InvariantCultureIgnoreCase);
         }
     }
 }
